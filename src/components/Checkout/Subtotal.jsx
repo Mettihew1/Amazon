@@ -1,37 +1,23 @@
-import React from 'react';
 import './Subtotal.css';
-// import CurrencyFormat from 'react-currency-format';
-import { NumericFormat } from "react-number-format";
-import { useStateValue } from '../../StateProvider';
-import { getBasketTotal } from '../../reducer';
+import { useSelector } from 'react-redux';
+import { selectBasketTotal, selectBasketItemCount } from '../../store/slices/basketSlice';
 import { useNavigate } from 'react-router-dom';
 
 function Subtotal() {
-  const [{ basket }, dispatch] = useStateValue();
+  const basketTotal = useSelector(selectBasketTotal);
+  const basketItemCount = useSelector(selectBasketItemCount);
   const navigate = useNavigate();
 
   return (
     <div className="subtotal">
-
-<NumericFormat
-  value={getBasketTotal(basket)}
-  displayType="text"
-  thousandSeparator={true}
-  prefix="$"
-  decimalScale={2}
-  renderText={(value) => (
-    <>
       <p>
-        Subtotal ({basket.length} items): <strong>{value}</strong>
+        Subtotal ({basketItemCount} items): <strong>${basketTotal.toFixed(2)}</strong>
       </p>
       <small className="subtotal__gift">
         <input type="checkbox" /> This order contains a gift
       </small>
-    </>
-  )}
-/>
 
-      <button onClick={e => navigate('/payment')}>Proceed to Checkout</button>
+      <button onClick={() => navigate('/payment')}>Proceed to Checkout</button>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import './Header.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signOut } from '../../features/auth/authSlice'; // Example action
+import { signOut } from '../../store/slices/authSlice'; // Example action
 
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
