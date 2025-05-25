@@ -13,6 +13,25 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name].[hash].[ext]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js'
+      }
+    }
+  },
+  server: {
+    port: 3000,
+    strictPort: true
+  },
+  preview: {
+    port: 3000,
+    strictPort: true
+  },
   optimizeDeps: {
     include: [
       '@mui/icons-material',
@@ -21,7 +40,8 @@ export default defineConfig({
       'slick-carousel',
       '@emotion/styled',
       'react',
-        'react-dom'
-    ]
+      'react-dom'
+    ],
+    exclude: ['js-big-decimal']
   }
 });
