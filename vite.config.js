@@ -2,33 +2,38 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/', 
-  plugins: [react()],
+  plugins: [react({
+    jsxImportSource: '@emotion/react', // Faster JSX compilation
+    babel: {
+      plugins: ['@emotion/babel-plugin'], // Better MUI styling
+    },
+  })],
   server: {
-    port: 5173,  // Optional: Explicitly set dev port
+    port: 5173,
+    warmup: {
+      clientFiles: ['./src/main.jsx', './src/App.jsx'], // Pre-warm critical files
+    },
   },
   build: {
-    outDir: 'dist', 
-     sourcemap: false,
-    chunkSizeWarningLimit: 1000, // Increase chunk size warning limit
+    sourcemap: false, // Disable for production
+    minify: 'terser', // Better minification
+    chunkSizeWarningLimit: 1500, // For MUI's larger chunks
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split vendor chunks
           mui: ['@mui/material', '@mui/icons-material'],
-          framer: ['framer-motion'],
-          react: ['react', 'react-dom'],
-        }
-      }
-    }
+          react: ['react', 'react-dom', 'react-router-dom'],
+          redux: ['@reduxjs/toolkit', 'react-redux'],
+        },
+      },
+    },
   },
   optimizeDeps: {
     include: [
-      'react',
-      'react-dom',
-      '@mui/material',
-      '@mui/icons-material'
+      '@mui/material/Unstable_Grid2', // Tree-shakeable MUI imports
+      '@mui/icons-material/ShoppingCart',
+      '@mui/icons-material/Menu',
     ],
-    exclude: ['source-map-js'], // if you're using this
-  }
+    exclude: ['js-big-decimal'], // If not needed
+  },
 });

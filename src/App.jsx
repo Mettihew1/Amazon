@@ -1,5 +1,5 @@
 import './App.css';
-import Header from './components/Header/Header';
+import DesktopHeader from './components/Header/DesktopHeader';
 import Home from './components/Home/Home';
 import SignUp from './components/User/SignUp';
 import Login from './components/User/Login';
@@ -12,11 +12,14 @@ import AdminProducts from './components/Admin/AdminProducts';
 import ErrorBoundary from './components/Error/ErrorBoundary';
 import About from './components/About/About';
 import Search from './components/Search/Search';
+import MobileHeader from './components/Header/MobileHeader';
+
+const isMobile = window.innerWidth
 
 function App() {
   return (
     <div className="app">
-      <Header />
+     {isMobile ? <MobileHeader /> : <DesktopHeader />}
       <Routes>
         <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
@@ -28,7 +31,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/" element={<Home />} />
-         <Route path="*" element={<h1>404 Not Found</h1>} />
+         <Route path="*" element={<h1 className='text-center p-5'>404 Not Found</h1>} />
       </Routes>
     </div>
   );

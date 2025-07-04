@@ -1,4 +1,4 @@
-import './Header.css';
+import './DesktopHeader.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function Header() {
+function DesktopHeader() {
     const basket = useSelector((state) => state.basket.items);
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
@@ -44,12 +44,8 @@ function Header() {
     return (
         <div className='flex flex-col'>
             <div className="header">
-                <Link to="/">
-                    <img
-                        className="header__logo"
-                        src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-                        alt="Amazon Logo"
-                    />
+                <Link to="/" className='text-white no-underline'>
+                  eesy
                 </Link>
 
                 <form className="header__search" onSubmit={handleSearchSubmit}>
@@ -105,7 +101,7 @@ function Header() {
                 </div>
             </div>
 
-            <AppBar position="static">
+            <AppBar position="static" color='inherit'>
                 <Toolbar>
                     <IconButton 
                         edge="start" 
@@ -114,14 +110,14 @@ function Header() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Box sx={{ flexGrow: 1, display: 'flex', gap: 2 }}>
+                    {/* <Box sx={{ flexGrow: 1, display: 'flex', gap: 2 }}>
                         <Typography variant="h6">
-                            <a href='/products' className='mx-2 text-white hover:text-gray-200'>Products</a>
+                            <a href='/products' className='text-white hover:text-gray-200'>Products</a>
                         </Typography>
                         <Typography variant="h6">
                             <a href='/about' className='text-white hover:text-gray-200'>About</a>
                         </Typography>
-                    </Box>
+                    </Box> */}
                 </Toolbar>
             </AppBar>
 
@@ -135,6 +131,8 @@ function Header() {
                     <ListItem button component={Link} to="/">Home</ListItem>
                     <ListItem button component={Link} to="/about">About</ListItem>
                     <ListItem button component={Link} to="/products">Products</ListItem>
+                    <ListItem button component={Link} to="/test">test</ListItem>
+
                     {user && (
                         <ListItem button component={Link} to="/profile">
                             Profile ({user.email})
@@ -146,4 +144,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default DesktopHeader;

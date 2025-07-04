@@ -19,7 +19,7 @@ function Products() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/prod`);
-        setProducts(response.data.products);
+        setProducts(response.data);
       } catch (err) {
         console.error("Error fetching products:", err);
         setError(err.response?.data?.error || err.message);
