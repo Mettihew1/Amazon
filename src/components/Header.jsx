@@ -13,6 +13,7 @@ export default function Header() {
   };
 
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
   return (
     <div style={{ display: "flex" }}>
@@ -24,8 +25,12 @@ export default function Header() {
       <a href="/" style={{color: 'green'}}>Phone </a>
       <a href="/test" >test </a>
       <a href="/products" style={{color:'yellow'}}>products </a>
-      <a href="/auth">login </a>
-      <a href="/cart" style={{color:'white'}}>cart {cart && cart.length}</a>
+       {user ? 
+       <a href="/dashboard" style={{color: 'purple', padding:'0px 10px'}}>{user.username}</a>
+        : 
+       <a href="/auth" style={{padding:'0px 10px'}}>Login</a>
+        } 
+      <a href="/cart" style={{color:'white'}}>{cart && cart.length}</a>
     </div>
   );
 }

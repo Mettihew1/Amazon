@@ -1,13 +1,7 @@
-// fetch('http://localhost:5000/products', {
-  // credentials: 'include'
-// });
-// This will allow cookies and authentication headers to be sent between your frontend and backend. If you have further CORS issues, make sure there are no browser extensions or proxies interfering.
-
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Products() {
+export default function Admin() {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   
@@ -28,26 +22,34 @@ export default function Products() {
     fetchProduct();
   }, []);
 
+  const feautreHandler = (ev) => {
+    axios.put(`${import.meta.env.VITE_URL}/admin/${ev}/featured`, { id: ev })
+        .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error("Failed to update product:", error);
+        setError(error.message);
+      });
+  };
+
   if (error) return <div>Error: {error}</div>;
   if (!product) return <div>Loading...</div>;
-  
+
 const map = product?.results?.map(ev => {
   return (
-    <div key={ev._id} style={{width:'250px'}}>
-      <p>{ev.name}</p>
-            <a href={`/product/${ev.slug}/${ev._id}`}>
-       <img src={ev.images[0]} alt="product" width={"199px"} />
-       </a>
-      <h2>{ev.name}</h2>
+    <div key={ev._id} style={{ display:'flex', alignItems:'center'}}>
+       <img src={ev.images[0]} alt="product" width={"99px"} />
+      <p style={{maxWidth:'150px', padding:'5px'}}>{ev.name}</p>
       <p>Price: ${ev.price}</p>
-      <p>{ev.description}</p>
+     <button onClick={() => feautreHandler(ev._id)}> {ev.featured ? <p style={{color:'red'}}>Unfeature</p> : <p style={{color:'green'}}>featured</p> } </button>
     </div>
   )
 })
 
 
   return (
-    <div style={{display:'flex', flexWrap:'wrap'}}>
+    <div>
      {map}
     </div>
   );

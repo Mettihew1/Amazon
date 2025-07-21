@@ -8,12 +8,18 @@ import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Auth from "./pages/Auth";
 import Products from "./pages/Products";
-import ProtectedRoute from "./components/ProtectedRoute"
-import Dashboard from "./pages/Dashboard"
-import Profile from "./pages/Profile"
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Admin from "./pages/Admin";
+import { Navigate } from "react-router-dom";
 
 export default function App() {
   const isMobile = window.innerWidth < 768;
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  
+  // const user = { isAdmin: true };
 
   return (
     <div>
@@ -22,13 +28,16 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/cart" element={<Cart />} />
+        {/* <Route element={<ProtectedRoute />}> */}
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/reset-password" element={<Auth />} /> // For token links
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} /> {/* </Route>  */}
 
-         {/* <Route element={<ProtectedRoute />}> */}
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/reset-password" element={<Auth />} />  // For token links
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />{" "}
-        {/* </Route>  */}
+        <Route
+          path="/admin"
+          element={user?.role === "admin" ? <Admin /> : <Navigate to="/" />}
+        />
 
         <Route path="/products" element={<Products />} />
         <Route path="/product/:slug/:id" element={<SingleProduct />} />

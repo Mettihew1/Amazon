@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
-
 export default function Home() {
   const [products, setProducts] = useState([]);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     async function test() {
-      const products = await axios.get(`${import.meta.env.VITE_URL}/products`);
+      const products = await axios.get(`${import.meta.env.VITE_URL}/products/featured`);
       setProducts(products.data);
     }
     test();
   }, []);
 
-  const productMap = products?.results?.map((ev) => {
+  console.log(products, 'can you seee me?');
+  
+  const productMap = products?.map((ev) => {
     return (
       <div key={ev._id} style={{ padding: "40px" }}>
+        <h1>Home</h1>
         <a
           href={`/product/${encodeURIComponent(ev.name)}/${
             ev._id

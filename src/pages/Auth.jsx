@@ -18,6 +18,8 @@ export default function Auth() {
                   { email: formData.email };
       
       const res = await axios.post(`${import.meta.env.VITE_URL}/${url}`, data, { withCredentials: true });
+      console.log(res);
+      
       
       if (mode === 'login') {
         localStorage.setItem('user', JSON.stringify(res.data.user));
