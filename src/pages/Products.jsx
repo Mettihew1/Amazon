@@ -1,8 +1,3 @@
-// fetch('http://localhost:5000/products', {
-  // credentials: 'include'
-// });
-// This will allow cookies and authentication headers to be sent between your frontend and backend. If you have further CORS issues, make sure there are no browser extensions or proxies interfering.
-
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -35,7 +30,7 @@ const map = product?.results?.map(ev => {
   return (
     <div key={ev._id} style={{width:'250px'}}>
       <p>{ev.name}</p>
-            <a href={`/product/${ev.slug}/${ev._id}`}>
+      <a href={`/products/${ev.slug}/${ev._id}`}>
        <img src={ev.images[0]} alt="product" width={"199px"} />
        </a>
       <h2>{ev.name}</h2>

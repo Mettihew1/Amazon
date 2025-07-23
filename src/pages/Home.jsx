@@ -12,8 +12,6 @@ export default function Home() {
     test();
   }, []);
 
-  console.log(products, 'can you seee me?');
-  
   const productMap = products?.map((ev) => {
     return (
       <div key={ev._id} style={{ padding: "40px" }}>

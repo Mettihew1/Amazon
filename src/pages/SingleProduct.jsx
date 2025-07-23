@@ -10,6 +10,9 @@ export default function SingleProduct() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { id } = useParams();
 
+  const [rating, setRating] = useState(0);
+const [comment, setComment] = useState('');
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -37,6 +40,23 @@ export default function SingleProduct() {
     fetchProduct();
   }, [id]);
 
+
+
+const reviewHandler = async (productId, ev) => {
+  ev.preventDefault();
+  try {
+    await axios.post(
+      `${import.meta.env.VITE_URL}/products/review`,
+      { productId, rating, comment },
+      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+    );
+    alert('Review submitted!');
+    setRating(0);  // Reset form
+    setComment('');
+  } catch (err) {
+    alert(err.response?.data?.error || 'Review failed');
+  }
+};
   const addToCart = async (productId) => {
     try {
       if (isLoggedIn) {
@@ -82,6 +102,25 @@ export default function SingleProduct() {
         {isLoggedIn ? 'Add to Cart' : 'Add to Guest Cart'}
       </button>
       <p>Status: {isLoggedIn ? 'Logged In' : 'Not Logged In'}</p>
+
+<form onSubmit={(ev) => reviewHandler(product._id, ev)}>
+  <input 
+    type="number" 
+    min="1" 
+    max="5" 
+    value={rating}
+    onChange={(e) => setRating(e.target.value)}
+    required
+  />
+  <input 
+    type="text" 
+    value={comment}
+    onChange={(e) => setComment(e.target.value)}
+    required
+    placeholder="Your review..."
+  />
+  <button type="submit">Submit Review</button>
+</form>
     </div>
   );
 }

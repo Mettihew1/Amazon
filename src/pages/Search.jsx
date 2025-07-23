@@ -61,7 +61,7 @@ export default function Search() {
       <div className="flex flex-wrap gap-4">
         {sortedProducts?.map((product) => (
           <div key={product._id} className="w-64 p-3 border rounded">
-            <a href={`/product/${product.slug}/${product._id}`}>
+            <a href={`/products/${product.slug}/${product._id}`}>
               <img 
                 src={product.images[0]} 
                 alt={product.name}
