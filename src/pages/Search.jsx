@@ -63,12 +63,12 @@ export default function Search() {
       {/* Products Grid */}
       <div className="flex flex-wrap gap-4">
         {sortedProducts?.map((product) => (
-          <div key={product._id} className="w-64 p-3 border rounded">
+          <div key={product._id} className="p-3 border rounded">
             <a href={`/products/${product.slug}/${product._id}`}>
               <img 
-                src={product.images[0]} 
+                src={product.images[0].url} 
                 alt={product.name}
-                className="w-full h-48 object-cover"
+                className="w-25"
                 width={"100px"}
               />
             </a>

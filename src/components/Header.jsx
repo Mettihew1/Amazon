@@ -146,6 +146,13 @@ useEffect(() => {
         <nav className={`category-nav ${showCategories ? 'mobile-visible' : ''}`}>
         <div className="container">
           <ul>
+
+            <li><a href="/test">test</a></li>
+            <li><a href="/products">products</a></li>
+            <li><a href="/cart">cart</a></li>
+            <li><a href="/">home</a></li>
+
+
             <li><a href="#">Women's Fashion</a></li>
             <li><a href="#">Men's Fashion</a></li>
             <li><a href="#">Electronics</a></li>

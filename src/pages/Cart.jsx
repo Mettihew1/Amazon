@@ -68,7 +68,6 @@ export default function Cart() {
           { withCredentials: true }
         );
         setProducts(response.data || []);
-        console.log(response.data)
         
       } catch (error) {
         console.error("Error fetching cart:", error);
@@ -85,8 +84,6 @@ export default function Cart() {
     fetchCartItems();
   }, [navigate]);
 
-  console.log(products, 'here000000000000-');
-  
 
   const updateQuantity = async (productId, newQuantity) => {
     if (newQuantity < 1) return;
@@ -154,16 +151,17 @@ export default function Cart() {
         {/* Cart Items */}
         <div className="lg:w-2/3">
           <div className="bg-white rounded-lg shadow divide-y">
-            {products.map((product) => (
+            {products?.map((product) => (
               <div key={product._id} className="p-4 flex flex-col sm:flex-row gap-4">
                 <a 
                   href={`/product/${product.name}/${product._id}`}
                   className="flex-shrink-0"
                 >
                   <img 
-                    src={product.images?.[0]?.url || "/placeholder-product.jpg"} 
-                    alt={product.name} 
+                    src={product?.product?.images[0]?.url} 
+                    alt={product?.product?.images[0].alt} 
                     className="w-32 h-32 object-contain rounded border"
+                    width={"200px"}
                   />
                 </a>
                 
@@ -183,7 +181,7 @@ export default function Cart() {
                     </button>
                   </div>
                   
-                  <p className="text-lg font-bold mt-2">${product.price.toFixed(2)}</p>
+                  <p className="text-lg font-bold mt-2">${product.price}</p>
                   
                   <div className="flex items-center mt-4">
                     <span className="mr-4">Quantity:</span>
