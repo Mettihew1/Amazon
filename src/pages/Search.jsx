@@ -26,6 +26,9 @@ export default function Search() {
     if (searchQuery) fetchProducts();
   }, [searchQuery]);
 
+  console.log( products);
+  
+
   // Sort products
   const sortedProducts = products?.results?.sort((a, b) => {
     if (sortBy === "price_asc") return a.price - b.price;

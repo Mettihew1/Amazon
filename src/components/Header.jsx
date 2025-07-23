@@ -3,13 +3,14 @@ import { FiSearch, FiUser, FiShoppingCart, FiMenu } from 'react-icons/fi';
 import { IoIosArrowDown } from 'react-icons/io';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
-
+import { FiChevronDown } from 'react-icons/fi';
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate  = useNavigate()
+const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     // const cart = JSON.parse(localStorage.getItem('cart') || []);
@@ -53,16 +54,18 @@ const Header = () => {
                 <IoIosArrowDown size={14} />
               </button>
             ) : (
-              <button className="login-button">Sign In</button>
+              <a href='/register' className="login-button">Sign In</a>
             )}
             
             {/* Moved search toggle here to be inline with cart */}
            
             
-            <button className="cart-button">
+            {/* <button className="cart-button"> */}
+              <a href='/cart'>
               <FiShoppingCart size={20} />
               {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-            </button>
+              </a>
+            {/* </button> */}
 
 
              <button 
@@ -88,11 +91,34 @@ const Header = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button type="submit" className="search-button">Search</button>
+              {/* <button type="submit" className="search-button">Search</button> */}
+
+
+  <div>
+    <button onClick={() => setIsOpen(!isOpen)}>All categories 
+   <FiChevronDown className="text-sm" />
+    </button>
+    {isOpen && (
+      <div className="absolute top-full left-0 bg-white shadow-lg">
+        <div className="p-2 hover:bg-gray-100">Option 1</div>
+        <div className="p-2 hover:bg-gray-100">Option 2</div>
+      </div>
+    )}
+  </div>
+
+
+
+
+
             </div>
           </form>
         </div>
       </div>
+
+
+
+
+      
       
       {/* Category Navigation */}
       <nav className="category-nav">

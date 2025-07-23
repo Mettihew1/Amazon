@@ -19,15 +19,14 @@ import Admin from "./pages/Admin";
 import { Navigate } from "react-router-dom";
 
 export default function App() {
-  const isMobile = window.innerWidth < 768;
+  // const isMobile = window.innerWidth < 768;
 
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // const user = { isAdmin: true };
-
   return (
     <div>
-      {isMobile ? <Header /> : <DesktopHeader />}
+      {/* {isMobile ? <Header /> : <DesktopHeader />} */}
+       <Header /> 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
