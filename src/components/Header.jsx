@@ -1,29 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { FiSearch, FiUser, FiShoppingCart, FiMenu } from 'react-icons/fi';
 import { IoIosArrowDown } from 'react-icons/io';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
 import { FiChevronDown } from 'react-icons/fi';
+import axios from 'axios'
+
 const Header = () => {
+  const [user, setUser] = useState();
   const [searchQuery, setSearchQuery] = useState('');
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
   const navigate  = useNavigate()
 const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    // const cart = JSON.parse(localStorage.getItem('cart') || []);
-    const cart = []
-    setCartCount(cart.length);
-    // const token = localStorage.getItem('token');
-    const token = ''
-    setIsLoggedIn(!!token);
-  }, []);
+useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_URL}/auth/check`, {
+        withCredentials: true
+      });
+      setUser(response.data.user)
+      setIsLoggedIn(response.data.authenticated);
+    } catch (err) {
+      console.error("Auth check failed:", err.response?.data || err.message);
+      setIsLoggedIn(false);
+    }
+  };
+  
+  checkAuth(); 
+  
+  const cart = []
+  setCartCount(cart.length);
+}, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log('Searching for:', searchQuery);
       if (searchQuery.trim()) {
       setShowMobileSearch(false)
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
@@ -38,10 +52,17 @@ const [isOpen, setIsOpen] = useState(false);
 
           <div style={{display: 'flex'}}>
 
-          <button className="menu-button">
-            <FiMenu size={20} />
-          </button>
-          <p>Eesy</p>
+            <button 
+  className="menu-button"
+  onClick={() => setShowCategories(!showCategories)}
+>
+  <FiMenu size={20} />
+</button>
+
+          {/* <button className="menu-button"> */}
+            {/* <FiMenu size={20} /> */}
+          {/* </button> */}
+          <a href='/'>Eesy</a>
 
           </div>
 
@@ -50,11 +71,11 @@ const [isOpen, setIsOpen] = useState(false);
           <div className="user-actions">
             {isLoggedIn ? (
               <button className="user-button">
-                <span>Account</span>
+                <a href='/login'>{user.username}</a>
                 <IoIosArrowDown size={14} />
               </button>
             ) : (
-              <a href='/register' className="login-button">Sign In</a>
+              <a href='/login' className="login-button">Sign In</a>
             )}
             
             {/* Moved search toggle here to be inline with cart */}
@@ -121,7 +142,8 @@ const [isOpen, setIsOpen] = useState(false);
       
       
       {/* Category Navigation */}
-      <nav className="category-nav">
+      {/* <nav className="category-nav"> */}
+        <nav className={`category-nav ${showCategories ? 'mobile-visible' : ''}`}>
         <div className="container">
           <ul>
             <li><a href="#">Women's Fashion</a></li>
@@ -133,6 +155,7 @@ const [isOpen, setIsOpen] = useState(false);
           </ul>
         </div>
       </nav>
+
     </header>
   );
 };

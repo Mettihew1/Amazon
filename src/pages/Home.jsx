@@ -12,16 +12,19 @@ export default function Home() {
     test();
   }, []);
 
+  console.log(products);
+  
+
   const productMap = products?.map((ev) => {
     return (
       <div key={ev._id} style={{ padding: "40px" }}>
         <h1>Home</h1>
         <a
-          href={`/product/${encodeURIComponent(ev.name)}/${
+          href={`/products/${encodeURIComponent(ev.name)}/${
             ev._id
           }?source=featured`}
         >
-          <img src={ev.images[0]} alt="product" width={"100px"} />
+          <img src={ev.images[0].url} alt={ev.images.alt} width={"100px"} />
         </a>
 
         <p>{ev.name}</p>

@@ -31,7 +31,7 @@ const map = product?.results?.map(ev => {
     <div key={ev._id} style={{width:'250px'}}>
       <p>{ev.name}</p>
       <a href={`/products/${ev.slug}/${ev._id}`}>
-       <img src={ev.images[0]} alt="product" width={"199px"} />
+       <img src={ev.images[0].url} alt="product" width={"199px"} />
        </a>
       <h2>{ev.name}</h2>
       <p>Price: ${ev.price}</p>

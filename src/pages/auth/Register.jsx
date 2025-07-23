@@ -10,7 +10,6 @@ export default function Register() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +22,16 @@ export default function Register() {
         formData,
         { withCredentials: true }
       );
-      navigate('/dashboard');
+
+        // ✅ Immediately fetch user info after login
+    // const { data } = await axios.get(`${import.meta.env.VITE_URL}/auth/check`, {
+      // withCredentials: true,
+    // });
+
+    // console.log("Logged in user:", data.user); // optional
+    alert('regitered successfuly')
+    
+    
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     } finally {

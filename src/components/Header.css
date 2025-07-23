@@ -160,6 +160,20 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+
+  /* burger menu to show categories  */
+    .category-nav.mobile-visible {
+    display: block !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
   .search-bar {
     display: none;
     position: absolute;
@@ -189,3 +203,4 @@
     gap: 10px;
   }
 }
+
